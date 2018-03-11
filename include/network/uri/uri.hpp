@@ -19,7 +19,7 @@
 #include <memory>
 #include <string>
 #include <cstdlib>
-#include <network/string_view.hpp>
+#include <string_view>
 #include <network/optional.hpp>
 #include <network/uri/config.hpp>
 #include <network/uri/uri_errors.hpp>
@@ -96,7 +96,7 @@ class uri {
   /**
    * \brief A reference to the underlying string_type parts.
    */
-  typedef network::string_view string_view;
+  typedef std::string_view string_view;
 
   /**
    * \brief The char traits.

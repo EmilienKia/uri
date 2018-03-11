@@ -10,18 +10,19 @@
 #include <utility>
 #include <iterator>
 #include <network/optional.hpp>
-#include <network/string_view.hpp>
+#include <string_view>
+#include <cassert>
 
 namespace network {
 namespace detail {
 class uri_part {
  public:
-  typedef string_view::value_type value_type;
-  typedef string_view::iterator iterator;
-  typedef string_view::const_iterator const_iterator;
-  typedef string_view::const_pointer const_pointer;
-  typedef string_view::size_type size_type;
-  typedef string_view::difference_type difference_type;
+  typedef std::string_view::value_type value_type;
+  typedef std::string_view::iterator iterator;
+  typedef std::string_view::const_iterator const_iterator;
+  typedef std::string_view::const_pointer const_pointer;
+  typedef std::string_view::size_type size_type;
+  typedef std::string_view::difference_type difference_type;
 
   uri_part() noexcept = default;
 
@@ -45,7 +46,7 @@ class uri_part {
     return last - first;
   }
 
-  string_view to_string_view() const noexcept { return string_view(ptr(), length()); }
+  std::string_view to_string_view() const noexcept { return std::string_view(ptr(), length()); }
 
  private:
   const_iterator first, last;

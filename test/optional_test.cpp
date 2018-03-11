@@ -6,7 +6,7 @@
 #include <gtest/gtest.h>
 #include <string>
 #include <network/optional.hpp>
-#include <network/string_view.hpp>
+#include <string_view>
 
 TEST(optional_test, empty_optional) {
   network::optional<int> opt;

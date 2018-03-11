@@ -14,7 +14,7 @@
 
 namespace network {
 namespace detail {
-std::string normalize_path_segments(string_view path) {
+std::string normalize_path_segments(std::string_view path) {
   std::string result;
 
   if (!path.empty()) {
@@ -63,8 +63,8 @@ std::string normalize_path_segments(string_view path) {
   return result;
 }
 
-std::string normalize_path(string_view path, uri_comparison_level level) {
-  auto result = path.to_string();
+std::string normalize_path(std::string_view path, uri_comparison_level level) {
+  std::string result(path.begin(), path.end());
 
   if (uri_comparison_level::syntax_based == level) {
     // case normalization

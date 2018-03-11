@@ -12,31 +12,31 @@
 namespace network {
 uri_builder::uri_builder(const network::uri &base_uri) {
   if (base_uri.has_scheme()) {
-    set_scheme(base_uri.scheme().to_string());
+    scheme(base_uri.scheme());
   }
 
   if (base_uri.has_user_info()) {
-    set_user_info(base_uri.user_info().to_string());
+    user_info(base_uri.user_info());
   }
 
   if (base_uri.has_host()) {
-    set_host(base_uri.host().to_string());
+    host(base_uri.host());
   }
 
   if (base_uri.has_port()) {
-    set_port(base_uri.port().to_string());
+    port(base_uri.port());
   }
 
   if (base_uri.has_path()) {
-    set_path(base_uri.path().to_string());
+    path(base_uri.path());
   }
 
   if (base_uri.has_query()) {
-    append_query(base_uri.query().to_string());
+    append_query(base_uri.query());
   }
 
   if (base_uri.has_fragment()) {
-    set_fragment(base_uri.fragment().to_string());
+    fragment(base_uri.fragment());
   }
 }
 

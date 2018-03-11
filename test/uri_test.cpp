@@ -1042,7 +1042,7 @@ TEST(uri_test, uri_has_host_bug_88) {
   ASSERT_FALSE(instance.has_query());
   ASSERT_FALSE(instance.has_fragment());
 
-  EXPECT_EQ("host", instance.host().to_string());
+  EXPECT_EQ("host", instance.host());
 }
 
 TEST(uri_test, uri_has_host_bug_88_2) {
@@ -1056,5 +1056,5 @@ TEST(uri_test, uri_has_host_bug_88_2) {
   ASSERT_FALSE(instance.has_query());
   ASSERT_FALSE(instance.has_fragment());
 
-  EXPECT_EQ("example.com", instance.host().to_string());
+  EXPECT_EQ("example.com", instance.host());
 }

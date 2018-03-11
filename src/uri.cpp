@@ -25,7 +25,7 @@ namespace {
 //
 inline std::pair<std::string::iterator, std::string::iterator> mutable_part(
     std::string &str, detail::uri_part part) {
-  auto view = string_view(str);
+  auto view = std::string_view(str);
 
   auto first_index = std::distance(std::begin(view), std::begin(part));
   auto first = std::begin(str);
@@ -40,20 +40,20 @@ inline std::pair<std::string::iterator, std::string::iterator> mutable_part(
 
 // This is a convenience function that converts a part of a
 // std::string to a string_view.
-inline string_view to_string_view(const std::string &uri,
+inline std::string_view to_string_view(const std::string &uri,
                                   detail::uri_part part) {
   if (!part.empty()) {
     const char *c_str = uri.c_str();
     const char *part_begin = &(*(std::begin(part)));
     std::advance(c_str, std::distance(c_str, part_begin));
-    return string_view(c_str, std::distance(std::begin(part), std::end(part)));
+    return std::string_view(c_str, std::distance(std::begin(part), std::end(part)));
   }
-  return string_view();
+  return std::string_view();
 }
 
-inline optional<std::string> make_arg(optional<string_view> view) {
+inline optional<std::string> make_arg(optional<std::string_view> view) {
   if (view) {
-    return view->to_string();
+    return std::string(view->begin(), view->end());
   }
   return nullopt;
 }
@@ -120,7 +120,7 @@ void uri::initialize(optional<string_type> scheme,
     uri_.append(*fragment);
   }
 
-  uri_view_ = string_view(uri_);
+  uri_view_ = std::string_view(uri_);
 
   auto it = std::begin(uri_view_);
   if (scheme) {
@@ -182,7 +182,7 @@ uri::uri(uri &&other) noexcept : uri_(std::move(other.uri_)),
                                  uri_parts_(std::move(other.uri_parts_)) {
   detail::advance_parts(uri_view_, uri_parts_, other.uri_parts_);
   other.uri_.clear();
-  other.uri_view_ = string_view(other.uri_);
+  other.uri_view_ = std::string_view(other.uri_);
   other.uri_parts_ = detail::uri_parts();
 }
 
@@ -210,54 +210,54 @@ bool uri::has_scheme() const noexcept {
   return static_cast<bool>(uri_parts_.scheme);
 }
 
-uri::string_view uri::scheme() const noexcept {
+std::string_view uri::scheme() const noexcept {
   return has_scheme() ? to_string_view(uri_, *uri_parts_.scheme)
-                      : string_view{};
+                      : std::string_view{};
 }
 
 bool uri::has_user_info() const noexcept {
   return static_cast<bool>(uri_parts_.hier_part.user_info);
 }
 
-uri::string_view uri::user_info() const noexcept {
+std::string_view uri::user_info() const noexcept {
   return has_user_info()
              ? to_string_view(uri_, *uri_parts_.hier_part.user_info)
-             : string_view{};
+             : std::string_view{};
 }
 
 bool uri::has_host() const noexcept {
   return static_cast<bool>(uri_parts_.hier_part.host);
 }
 
-uri::string_view uri::host() const noexcept {
+std::string_view uri::host() const noexcept {
   return has_host() ? to_string_view(uri_, *uri_parts_.hier_part.host)
-                    : string_view{};
+                    : std::string_view{};
 }
 
 bool uri::has_port() const noexcept {
   return static_cast<bool>(uri_parts_.hier_part.port);
 }
 
-uri::string_view uri::port() const noexcept {
+std::string_view uri::port() const noexcept {
   return has_port() ? to_string_view(uri_, *uri_parts_.hier_part.port)
-                    : string_view{};
+                    : std::string_view{};
 }
 
 bool uri::has_path() const noexcept {
   return static_cast<bool>(uri_parts_.hier_part.path);
 }
 
-uri::string_view uri::path() const noexcept {
+std::string_view uri::path() const noexcept {
   return has_path() ? to_string_view(uri_, *uri_parts_.hier_part.path)
-                    : string_view{};
+                    : std::string_view{};
 }
 
 bool uri::has_query() const noexcept {
   return static_cast<bool>(uri_parts_.query);
 }
 
-uri::string_view uri::query() const noexcept {
-  return has_query() ? to_string_view(uri_, *uri_parts_.query) : string_view{};
+std::string_view uri::query() const noexcept {
+  return has_query() ? to_string_view(uri_, *uri_parts_.query) : std::string_view{};
 }
 
 uri::query_iterator::query_iterator() : query_{}, kvp_{} {}
@@ -343,11 +343,11 @@ void uri::query_iterator::assign_kvp() noexcept {
   auto eq_it =
       std::find_if(first, sep_it, [](char c) -> bool { return c == '='; });
 
-  kvp_.first = string_view(std::addressof(*first), std::distance(first, eq_it));
+  kvp_.first = std::string_view(std::addressof(*first), std::distance(first, eq_it));
   if (eq_it != sep_it) {
     ++eq_it; // skip '=' symbol
   }
-  kvp_.second = string_view(std::addressof(*eq_it), std::distance(eq_it, sep_it));
+  kvp_.second = std::string_view(std::addressof(*eq_it), std::distance(eq_it, sep_it));
 }
 
 void uri::query_iterator::increment() noexcept {
@@ -375,28 +375,28 @@ bool uri::has_fragment() const noexcept {
   return static_cast<bool>(uri_parts_.fragment);
 }
 
-uri::string_view uri::fragment() const noexcept {
+std::string_view uri::fragment() const noexcept {
   return has_fragment() ? to_string_view(uri_, *uri_parts_.fragment)
-                        : string_view{};
+                        : std::string_view{};
 }
 
 bool uri::has_authority() const noexcept {
   return has_host();
 }
 
-uri::string_view uri::authority() const noexcept {
+std::string_view uri::authority() const noexcept {
   if (!has_host()) {
-    return string_view{};
+    return std::string_view{};
   }
 
   auto host = this->host();
 
-  auto user_info = string_view{};
+  auto user_info = std::string_view{};
   if (has_user_info()) {
     user_info = this->user_info();
   }
 
-  auto port = string_view{};
+  auto port = std::string_view{};
   if (has_port()) {
     port = this->port();
   }
@@ -428,7 +428,7 @@ uri::string_view uri::authority() const noexcept {
     }
   }
 
-  return string_view(first, std::distance(first, last));
+  return std::string_view(first, std::distance(first, last));
 }
 
 std::string uri::string() const { return uri_; }
@@ -455,7 +455,7 @@ bool uri::is_opaque() const noexcept {
 
 uri uri::normalize(uri_comparison_level level) const {
   string_type normalized(uri_);
-  string_view normalized_view(normalized);
+  std::string_view normalized_view(normalized);
   detail::uri_parts parts;
   detail::advance_parts(normalized_view, parts, uri_parts_);
 
@@ -485,7 +485,7 @@ uri uri::normalize(uri_comparison_level level) const {
     normalized.erase(detail::decode_encoded_unreserved_chars(
                          std::begin(normalized), std::end(normalized)),
                      std::end(normalized));
-    normalized_view = string_view(normalized);
+    normalized_view = std::string_view(normalized);
 
     // need to parse the parts again as the underlying string has changed
     const_iterator it = std::begin(normalized_view), last = std::end(normalized_view);
@@ -554,11 +554,11 @@ uri uri::make_relative(const uri &other) const {
 
   optional<string_type> query, fragment;
   if (other.has_query()) {
-    query = other.query().to_string();
+    query = string_type(other.query().begin(), other.query().end());
   }
 
   if (other.has_fragment()) {
-    fragment = other.fragment().to_string();
+    fragment = string_type(other.fragment().begin(), other.fragment().end());
   }
 
   network::uri result;
@@ -673,7 +673,7 @@ int uri::compare(const uri &other, uri_comparison_level level) const noexcept {
 bool uri::initialize(const string_type &uri) {
   uri_ = detail::trim_copy(uri);
   if (!uri_.empty()) {
-    uri_view_ = string_view(uri_);
+    uri_view_ = std::string_view(uri_);
     const_iterator it = std::begin(uri_view_), last = std::end(uri_view_);
     bool is_valid = detail::parse(it, last, uri_parts_);
     return is_valid;

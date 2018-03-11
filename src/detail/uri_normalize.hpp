@@ -7,13 +7,13 @@
 #define NETWORK_DETAIL_NORMALIZE_INC
 
 #include <network/uri/uri.hpp>
-#include <network/string_view.hpp>
+#include <string_view>
 
 namespace network {
 namespace detail {
-std::string normalize_path_segments(string_view path);
+std::string normalize_path_segments(std::string_view path);
 
-std::string normalize_path(string_view path, uri_comparison_level level);
+std::string normalize_path(std::string_view path, uri_comparison_level level);
 }  // namespace detail
 }  // namespace network
 

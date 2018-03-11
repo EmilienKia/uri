@@ -20,8 +20,8 @@ enum class authority_state {
 };
 }  // namespace
 
-bool parse_authority(string_view::const_iterator &it,
-                     string_view::const_iterator last,
+bool parse_authority(std::string_view::const_iterator &it,
+                     std::string_view::const_iterator last,
                      optional<uri_part> &user_info,
                      optional<uri_part> &host,
                      optional<uri_part> &port) {

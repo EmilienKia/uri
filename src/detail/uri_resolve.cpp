@@ -58,8 +58,8 @@ std::string remove_dot_segments(std::string input) {
   return result;
 }
 
-std::string remove_dot_segments(string_view path) {
-  return remove_dot_segments(path.to_string());
+std::string remove_dot_segments(std::string_view path) {
+  return remove_dot_segments(std::string(path.begin(), path.end()));
 }
 
 // implementation of http://tools.ietf.org/html/rfc3986#section-5.2.3
@@ -74,9 +74,9 @@ std::string merge_paths(const uri& base, const uri& reference) {
     result.append(std::begin(base_path), std::end(last_slash));
   }
   if (reference.has_path()) {
-    result.append(reference.path().to_string());
+    result.append(reference.path().begin(), reference.path().end());
   }
-  return remove_dot_segments(string_view(result));
+  return remove_dot_segments(std::string_view(result));
 }
 }  // namespace detail
 }  // namespace network

@@ -6,11 +6,11 @@
 #ifndef URI_TEST_STRING_UTILITY_INC
 #define URI_TEST_STRING_UTILITY_INC
 
-#include <network/string_view.hpp>
+#include <string_view>
 
 namespace network {
-inline bool operator==(const char *lhs, string_view rhs) {
-  return string_view(lhs) == rhs;
+inline bool operator==(const char *lhs, std::string_view rhs) {
+  return std::string_view(lhs) == rhs;
 }
 }  // namespace network
 

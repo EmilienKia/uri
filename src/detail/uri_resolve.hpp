@@ -12,7 +12,7 @@
 namespace network {
 namespace detail {
 // implementation of http://tools.ietf.org/html/rfc3986#section-5.2.4
-std::string remove_dot_segments(string_view input);
+std::string remove_dot_segments(std::string_view input);
 
 // implementation of http://tools.ietf.org/html/rfc3986#section-5.2.3
 std::string merge_paths(const uri &base, const uri &reference);

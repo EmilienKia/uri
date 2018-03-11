@@ -13,18 +13,18 @@ namespace detail {
 namespace {
 template <class Iterator>
 uri_part copy_part(Iterator first, Iterator last,
-                   string_view::const_iterator &it) {
+                   std::string_view::const_iterator &it) {
   auto part_first = it;
   std::advance(it, std::distance(first, last));
   return detail::uri_part(part_first, it);
 }
 }  // namespace
 
-uri_part copy_part(const std::string &uri, string_view::const_iterator &it) {
+uri_part copy_part(const std::string &uri, std::string_view::const_iterator &it) {
   return copy_part(std::begin(uri), std::end(uri), it);
 }
 
-void advance_parts(string_view uri_view, uri_parts &parts,
+void advance_parts(std::string_view uri_view, uri_parts &parts,
                    const uri_parts &existing_parts) {
   auto first = std::begin(uri_view);
 

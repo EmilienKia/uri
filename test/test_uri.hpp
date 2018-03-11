@@ -88,8 +88,8 @@ struct uri {
   }
 
   std::string uri_;
-  network::string_view view;
-  network::string_view::const_iterator it, last;
+  std::string_view view;
+  std::string_view::const_iterator it, last;
 
   uri_parts parts;
 

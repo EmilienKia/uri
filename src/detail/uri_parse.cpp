@@ -29,8 +29,8 @@ enum class hier_part_state {
   path
 };
 
-bool validate_scheme(string_view::const_iterator &it,
-                     string_view::const_iterator last) {
+bool validate_scheme(std::string_view::const_iterator &it,
+                     std::string_view::const_iterator last) {
   if (it == last) {
     return false;
   }
@@ -53,8 +53,8 @@ bool validate_scheme(string_view::const_iterator &it,
   return true;
 }
 
-bool validate_user_info(string_view::const_iterator it,
-                        string_view::const_iterator last) {
+bool validate_user_info(std::string_view::const_iterator it,
+                        std::string_view::const_iterator last) {
   while (it != last) {
     if (!is_unreserved(it, last) &&
         !is_pct_encoded(it, last) &&
@@ -66,9 +66,9 @@ bool validate_user_info(string_view::const_iterator it,
   return true;
 }
 
-bool set_host_and_port(string_view::const_iterator first,
-                       string_view::const_iterator last,
-                       string_view::const_iterator last_colon,
+bool set_host_and_port(std::string_view::const_iterator first,
+                       std::string_view::const_iterator last,
+                       std::string_view::const_iterator last_colon,
                        uri_parts &parts) {
   if (first >= last_colon) {
     parts.hier_part.host = uri_part(first, last);
@@ -85,8 +85,8 @@ bool set_host_and_port(string_view::const_iterator first,
   return true;
 }
 
-bool validate_fragment(string_view::const_iterator &it,
-                       string_view::const_iterator last) {
+bool validate_fragment(std::string_view::const_iterator &it,
+                       std::string_view::const_iterator last) {
   while (it != last) {
     if (!is_pchar(it, last) && !is_in(it, last, "?/")) {
       return false;
@@ -96,7 +96,7 @@ bool validate_fragment(string_view::const_iterator &it,
 }
 } // namespace
 
-bool parse(string_view::const_iterator &it, string_view::const_iterator last,
+bool parse(std::string_view::const_iterator &it, std::string_view::const_iterator last,
            uri_parts &parts) {
   auto state = uri_state::scheme;
 

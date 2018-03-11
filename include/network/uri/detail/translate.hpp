@@ -77,6 +77,20 @@ struct translate_impl<const wchar_t *> {
   }
 };
 
+template <>
+struct translate_impl<std::string_view> {
+  std::string operator()(const std::string_view &source) const {
+    return std::string(std::begin(source), std::end(source));
+  }
+};
+
+template <>
+struct translate_impl<std::wstring_view> {
+  std::string operator()(const std::wstring_view &source) const {
+    return std::string(std::begin(source), std::end(source));
+  }
+};
+
 template <typename Source>
 inline std::string translate(const Source &source) {
   translate_impl<Source> impl;
