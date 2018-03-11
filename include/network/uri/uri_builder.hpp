@@ -255,7 +255,7 @@ class uri_builder {
   void append_query(string_type query);
   void set_fragment(string_type fragment);
 
-  optional<string_type> scheme_, user_info_, host_, port_, path_, query_,
+  std::optional<string_type> scheme_, user_info_, host_, port_, path_, query_,
       fragment_;
 };
 }  // namespace network

@@ -9,7 +9,7 @@
 #include <string>
 #include <utility>
 #include <iterator>
-#include <network/optional.hpp>
+#include <optional>
 #include <string_view>
 #include <cassert>
 
@@ -55,19 +55,19 @@ class uri_part {
 struct hierarchical_part {
   hierarchical_part() = default;
 
-  optional<uri_part> user_info;
-  optional<uri_part> host;
-  optional<uri_part> port;
-  optional<uri_part> path;
+  std::optional<uri_part> user_info;
+  std::optional<uri_part> host;
+  std::optional<uri_part> port;
+  std::optional<uri_part> path;
 };
 
 struct uri_parts {
   uri_parts() = default;
 
-  optional<uri_part> scheme;
+  std::optional<uri_part> scheme;
   hierarchical_part hier_part;
-  optional<uri_part> query;
-  optional<uri_part> fragment;
+  std::optional<uri_part> query;
+  std::optional<uri_part> fragment;
 };
 }  // namespace detail
 }  // namespace network

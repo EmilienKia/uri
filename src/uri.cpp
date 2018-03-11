@@ -51,22 +51,22 @@ inline std::string_view to_string_view(const std::string &uri,
   return std::string_view();
 }
 
-inline optional<std::string> make_arg(optional<std::string_view> view) {
+inline std::optional<std::string> make_arg(std::optional<std::string_view> view) {
   if (view) {
     return std::string(view->begin(), view->end());
   }
-  return nullopt;
+  return std::nullopt;
 }
 
 template <class T>
 inline void ignore(T) {}
 }  // namespace
 
-void uri::initialize(optional<string_type> scheme,
-                     optional<string_type> user_info,
-                     optional<string_type> host, optional<string_type> port,
-                     optional<string_type> path, optional<string_type> query,
-                     optional<string_type> fragment) {
+void uri::initialize(std::optional<string_type> scheme,
+                     std::optional<string_type> user_info,
+                     std::optional<string_type> host, std::optional<string_type> port,
+                     std::optional<string_type> path, std::optional<string_type> query,
+                     std::optional<string_type> fragment) {
   if (scheme) {
     uri_.append(*scheme);
   }
@@ -262,11 +262,11 @@ std::string_view uri::query() const noexcept {
 
 uri::query_iterator::query_iterator() : query_{}, kvp_{} {}
 
-uri::query_iterator::query_iterator(optional<detail::uri_part> query)
+uri::query_iterator::query_iterator(std::optional<detail::uri_part> query)
   : query_(query)
   , kvp_{} {
   if (query_ && query_->empty()) {
-    query_ = nullopt;
+    query_ = std::nullopt;
   }
   else {
     assign_kvp();
@@ -359,7 +359,7 @@ void uri::query_iterator::increment() noexcept {
   }
 
   if (query_->empty()) {
-    query_ = nullopt;
+    query_ = std::nullopt;
   }
 }
 
@@ -498,7 +498,7 @@ uri uri::normalize(uri_comparison_level level) const {
           to_string_view(normalized, *parts.hier_part.path));
 
       // put the normalized path back into the uri
-      optional<string_type> query, fragment;
+      std::optional<string_type> query, fragment;
       if (parts.query) {
         query = parts.query->to_string();
       }
@@ -552,7 +552,7 @@ uri uri::make_relative(const uri &other) const {
   auto other_path = detail::normalize_path(other.path(),
                                            uri_comparison_level::syntax_based);
 
-  optional<string_type> query, fragment;
+  std::optional<string_type> query, fragment;
   if (other.has_query()) {
     query = string_type(other.query().begin(), other.query().end());
   }
@@ -562,8 +562,8 @@ uri uri::make_relative(const uri &other) const {
   }
 
   network::uri result;
-  result.initialize(optional<string_type>(), optional<string_type>(),
-                    optional<string_type>(), optional<string_type>(),
+  result.initialize(std::optional<string_type>(), std::optional<string_type>(),
+                    std::optional<string_type>(), std::optional<string_type>(),
                     other_path, query, fragment);
   return result;
 }
@@ -582,7 +582,7 @@ uri uri::resolve(const uri &base) const {
     return *this;
   }
 
-  optional<uri::string_type> user_info, host, port, path, query, fragment;
+  std::optional<uri::string_type> user_info, host, port, path, query, fragment;
 
   if (has_authority()) {
     // g -> http://g

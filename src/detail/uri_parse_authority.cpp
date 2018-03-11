@@ -22,9 +22,9 @@ enum class authority_state {
 
 bool parse_authority(std::string_view::const_iterator &it,
                      std::string_view::const_iterator last,
-                     optional<uri_part> &user_info,
-                     optional<uri_part> &host,
-                     optional<uri_part> &port) {
+                     std::optional<uri_part> &user_info,
+                     std::optional<uri_part> &host,
+                     std::optional<uri_part> &port) {
   auto first = it;
 
   auto state = authority_state::user_info;

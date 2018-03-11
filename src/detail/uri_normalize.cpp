@@ -42,7 +42,7 @@ std::string normalize_path_segments(std::string_view path) {
     }
 
     // remove adjacent slashes
-    optional<std::string> prev_segment;
+    std::optional<std::string> prev_segment;
     detail::remove_erase_if(
         normalized_segments, [&prev_segment](const std::string& segment) {
           bool has_adjacent_slash =

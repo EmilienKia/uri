@@ -9,19 +9,19 @@
 #include <string>
 #include <vector>
 #include <locale>
-#include <network/optional.hpp>
+#include <optional>
 #include <network/uri/detail/decode.hpp>
 
 namespace network {
 namespace detail {
 
-inline optional<char> percent_encode(std::string::const_iterator it) {
+inline std::optional<char> percent_encode(std::string::const_iterator it) {
   try {
     char output = '\0';
     detail::decode_char(it, &output);
     return output;
   } catch (percent_decoding_error &) {
-    return optional<char>();
+    return std::optional<char>();
   }
 }
 

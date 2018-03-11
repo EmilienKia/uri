@@ -12,9 +12,9 @@ namespace network {
 namespace detail {
 bool parse_authority(std::string_view::const_iterator &first,
                      std::string_view::const_iterator last,
-                     optional<uri_part> &user_info,
-                     optional<uri_part> &host,
-                     optional<uri_part> &port);
+                     std::optional<uri_part> &user_info,
+                     std::optional<uri_part> &host,
+                     std::optional<uri_part> &port);
 }  // namespace detail
 }  // namespace network
 

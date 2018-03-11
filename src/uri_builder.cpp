@@ -58,7 +58,7 @@ void uri_builder::set_user_info(string_type user_info) {
 }
 
 uri_builder &uri_builder::clear_user_info() {
-  user_info_ = network::nullopt;
+  user_info_ = std::nullopt;
   return *this;
 }
 
@@ -77,12 +77,12 @@ void uri_builder::set_port(string_type port) {
 }
 
 uri_builder &uri_builder::clear_port() {
-  port_ = network::nullopt;
+  port_ = std::nullopt;
   return *this;
 }
 
 void uri_builder::set_authority(string_type authority) {
-  optional<detail::uri_part> user_info, host, port;
+  std::optional<detail::uri_part> user_info, host, port;
   uri::string_view view(authority);
   uri::const_iterator it = std::begin(view), last = std::end(view);
   detail::parse_authority(it, last, user_info, host, port);
@@ -107,7 +107,7 @@ void uri_builder::set_path(string_type path) {
 }
 
 uri_builder &uri_builder::clear_path() {
-  path_ = network::nullopt;
+  path_ = std::nullopt;
   return *this;
 }
 
@@ -123,7 +123,7 @@ void uri_builder::append_query(string_type query) {
 }
 
 uri_builder &uri_builder::clear_query() {
-  query_ = network::nullopt;
+  query_ = std::nullopt;
   return *this;
 }
 
@@ -134,7 +134,7 @@ void uri_builder::set_fragment(string_type fragment) {
 }
 
 uri_builder &uri_builder::clear_fragment() {
-  fragment_ = network::nullopt;
+  fragment_ = std::nullopt;
   return *this;
 }
 }  // namespace network

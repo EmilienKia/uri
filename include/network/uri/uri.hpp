@@ -20,7 +20,7 @@
 #include <string>
 #include <cstdlib>
 #include <string_view>
-#include <network/optional.hpp>
+#include <optional>
 #include <network/uri/config.hpp>
 #include <network/uri/uri_errors.hpp>
 #include <network/uri/detail/uri_parts.hpp>
@@ -130,7 +130,7 @@ class uri {
     using iterator_category = std::forward_iterator_tag;
 
     query_iterator();
-    explicit query_iterator(optional<detail::uri_part>);
+    explicit query_iterator(std::optional<detail::uri_part>);
     query_iterator(const query_iterator &);
     query_iterator &operator=(const query_iterator &);
     reference operator++() noexcept;
@@ -148,7 +148,7 @@ class uri {
     void assign_kvp() noexcept;
     void increment() noexcept;
 
-    optional<detail::uri_part> query_;
+    std::optional<detail::uri_part> query_;
     value_type kvp_;
   };
 
@@ -593,10 +593,10 @@ class uri {
  private:
   bool initialize(const string_type &uri);
 
-  void initialize(optional<string_type> scheme, optional<string_type> user_info,
-                  optional<string_type> host, optional<string_type> port,
-                  optional<string_type> path, optional<string_type> query,
-                  optional<string_type> fragment);
+  void initialize(std::optional<string_type> scheme, std::optional<string_type> user_info,
+                  std::optional<string_type> host, std::optional<string_type> port,
+                  std::optional<string_type> path, std::optional<string_type> query,
+                  std::optional<string_type> fragment);
 
   string_type uri_;
   string_view uri_view_;
