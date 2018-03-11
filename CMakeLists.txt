@@ -19,12 +19,12 @@ set(CMAKE_VERBOSE_MAKEFILE true)
 
 if (${CMAKE_CXX_COMPILER_ID} MATCHES GNU)
   INCLUDE(CheckCXXCompilerFlag)
-  CHECK_CXX_COMPILER_FLAG(-std=c++14 HAVE_STD11)
+  CHECK_CXX_COMPILER_FLAG(-std=c++17 HAVE_STD17)
 
-  if (HAVE_STD11)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
+  if (HAVE_STD17)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
   else()
-    message(FATAL_ERROR "No C++ 11 support (Compiler does not define -std=c++14).")
+    message(FATAL_ERROR "No C++ 17 support (Compiler does not define -std=c++17).")
   endif()
 
   if (Uri_FULL_WARNINGS)
@@ -37,7 +37,7 @@ if (${CMAKE_CXX_COMPILER_ID} MATCHES GNU)
 
   message("C++ Flags: ${CMAKE_CXX_FLAGS} link flags: ${CMAKE_CXX_LINK_FLAGS}")
 elseif(${CMAKE_CXX_COMPILER_ID} MATCHES Clang)
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
 
   if (NOT Uri_DISABLE_LIBCXX)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
