@@ -1,0 +1,10 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: Network URI
+Description: C++ Network URI library implementing N3975 (based on RFC 3986 and 3987)
+Version: @PACKAGE_VERSION@
+Libs: -L${libdir} -luri
+Cflags: -I${includedir}

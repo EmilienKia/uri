@@ -21,4 +21,5 @@ AC_OUTPUT([
 Makefile
 include/Makefile
 src/Makefile
+network-uri.pc
 ])
